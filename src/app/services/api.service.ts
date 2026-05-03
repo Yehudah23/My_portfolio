@@ -8,7 +8,15 @@ import { catchError, tap } from 'rxjs/operators';
 export class ApiService {
 	public readonly http = inject(HttpClient);
 	private readonly platformId = inject(PLATFORM_ID);
-	public readonly baseUrl = '/api';
+	public readonly baseUrl = ((): string => {
+		try {
+			const meta = (typeof document !== 'undefined') && document.querySelector('meta[name="api-base-url"]');
+			const val = meta ? meta.getAttribute('content') || '' : '';
+			return val && val !== '%BACKEND_URL%' ? val : '/api';
+		} catch (e) {
+			return '/api';
+		}
+	})();
 	private readonly projectsCacheKey = 'portfolio.projects.cache.v1';
 
 	/**
