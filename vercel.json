@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/api/:path*",
+      "destination": "https://myportfolio-amie.onrender.com/php/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }

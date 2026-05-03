@@ -7,8 +7,7 @@
     "start": "ng serve --proxy-config proxy.conf.json",
     "start:proxy": "ng serve --proxy-config proxy.conf.json",
     "php": "php -S localhost:8000 -t php",
-    "set-backend-url": "node scripts/set-backend-url.js",
-    "build": "npm run set-backend-url && ng build",
+    "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:Myportfolio": "node dist/Myportfolio/server/server.mjs"
