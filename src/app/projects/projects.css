@@ -1,0 +1,180 @@
+/* Projects Component Styles */
+
+/* Project card styles - Modern clean design */
+.project-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  background: rgba(255, 255, 255, 0.03) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.project-image-container {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  height: 240px;
+}
+
+.project-image-container img {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.project-card:hover .project-image-container img {
+  transform: scale(1.1);
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.project-card:hover .project-overlay {
+  opacity: 1;
+}
+
+.project-overlay .btn {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: none;
+  padding: 10px 16px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.project-overlay .btn:hover {
+  transform: scale(1.05);
+  background: #fff !important;
+}
+
+/* Card body styling */
+.project-card .card-body {
+  background: rgba(6, 11, 29, 0.92);
+  padding: 1.5rem;
+}
+
+.project-card .card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #fff;
+}
+
+.project-card .project-description {
+  color: rgba(255, 255, 255, 0.98);
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 0;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+
+.project-card .card-body .text-muted,
+.project-card .card-body .text-light {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.project-card .badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+}
+
+/* Filter buttons - Modern style */
+.btn-group .btn {
+  transition: all 0.3s ease;
+  border-radius: 8px !important;
+  padding: 0.5rem 1.25rem;
+  font-weight: 500;
+  margin: 0 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .project-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .project-image-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Make filter buttons wrap nicely */
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+  
+  .btn-group .btn {
+    flex: 0 1 auto;
+    font-size: 0.85rem;
+    margin: 0;
+    padding: 0.4rem 1rem;
+  }
+  
+  /* Ensure cards are visible and properly spaced */
+  .col {
+    margin-bottom: 1.5rem;
+  }
+  
+  /* Always show overlay buttons on mobile - no hover needed */
+  .project-overlay {
+    opacity: 1;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.85) 100%);
+  }
+  
+  /* Make project images responsive */
+  .project-image-container {
+    height: 200px;
+  }
+  
+  /* Card body padding adjustment */
+  .project-card .card-body {
+    padding: 1.25rem;
+  }
+  
+  /* Adjust title size */
+  .project-card .card-title {
+    font-size: 1.1rem;
+  }
+  
+  /* Make action buttons full width on mobile */
+  .project-card .d-flex.gap-2 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+  
+  .project-card .d-flex.gap-2 .btn {
+    width: 100%;
+  }
+}

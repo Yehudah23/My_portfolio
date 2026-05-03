@@ -1,0 +1,60 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0">
+          <div class="card-body p-5">
+            <div class="text-center mb-4">
+              <h2 class="fw-bold text-primary">Admin Login</h2>
+              <p class="text-muted">Enter your credentials to access the admin panel</p>
+            </div>
+            
+            <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input 
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  id="username" 
+                  [(ngModel)]="username" 
+                  name="username"
+                  required
+                  [disabled]="loading">
+              </div>
+              
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  class="form-control form-control-lg" 
+                  id="password" 
+                  [(ngModel)]="password" 
+                  name="password"
+                  required
+                  [disabled]="loading">
+              </div>
+              
+              <div *ngIf="error" class="alert alert-danger" role="alert">
+                {{ error }}
+              </div>
+              
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-lg w-100"
+                [disabled]="loading || !loginForm.form.valid">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ loading ? 'Logging in...' : 'Login' }}
+              </button>
+            </form>
+            
+            <div class="text-center mt-4">
+              <small class="text-muted">
+                
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

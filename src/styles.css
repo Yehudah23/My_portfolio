@@ -1,0 +1,343 @@
+/* You can add global styles to this file, and also import other style files */
+/* Bootstrap is imported in angular.json */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Global Variables */
+:root {
+  --primary-color: #0d6efd;
+  --primary-color-dark: #0a58ca;
+  --secondary-color: #6c757d;
+  --dark-color: #212529;
+  --light-color: #f8f9fa;
+  --success-color: #198754;
+  --info-color: #0dcaf0;
+  --warning-color: #ffc107;
+  --danger-color: #dc3545;
+  --transition-speed: 0.3s;
+  --border-radius: 8px;
+  --box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Base styles */
+html, body {
+  color: var(--dark-color);
+  font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px; /* Account for fixed header */
+}
+
+body {
+  overflow-x: hidden;
+  transition: background-color var(--transition-speed) ease;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #f8f9fa;
+}
+
+/* Keep Bootstrap's text-light visible on dark backgrounds */
+.text-light {
+  color: #fff !important;
+}
+
+/* Smooth transitions for theme changes */
+.btn, a, .card, .form-control, .nav-link {
+  transition: all var(--transition-speed) ease;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-color);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color-dark);
+}
+
+/* Dark mode scrollbar */
+body.dark-mode::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+/* Animation classes */
+.animate__animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -40px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translate3d(100px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate__fadeIn {
+  animation-name: fadeIn;
+}
+
+.animate__fadeInUp {
+  animation-name: fadeInUp;
+}
+
+.animate__fadeInDown {
+  animation-name: fadeInDown;
+}
+
+.animate__fadeInLeft {
+  animation-name: fadeInLeft;
+}
+
+.animate__fadeInRight {
+  animation-name: fadeInRight;
+}
+
+/* Custom utility classes */
+.bg-dark-subtle {
+  background-color: #2d2d2d;
+}
+
+.hover-lift {
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--box-shadow);
+}
+
+/* Adjust spacing for fixed header */
+main {
+  padding-top: 80px;
+}
+
+/* Responsive font sizes */
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: calc(1.625rem + 3.5vw);
+  }
+  .display-2 {
+    font-size: calc(1.575rem + 3vw);
+  }
+  .display-3 {
+    font-size: calc(1.525rem + 2.5vw);
+  }
+  .display-4 {
+    font-size: calc(1.475rem + 2vw);
+  }
+  .display-5 {
+    font-size: calc(1.425rem + 1.5vw);
+  }
+  .display-6 {
+    font-size: calc(1.375rem + 1vw);
+  }
+}
+
+/* Improve button styles */
+.btn {
+  border-radius: 5px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-color-dark);
+  border-color: var(--primary-color-dark);
+}
+
+/* Card enhancements */
+.card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+}
+
+/* Section spacing */
+section {
+  padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+  section {
+    padding: 3rem 0;
+  }
+}
+
+/* ==========================
+   Responsive helpers
+   ========================== */
+
+/* Make images and media scale nicely */
+.img-responsive,
+.card-img-top,
+.profile-image-container img {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+}
+
+/* Utility for full-width buttons on small screens */
+.btn-block {
+  display: block;
+  width: 100%;
+}
+
+/* Project card tweaks for smaller screens */
+.project-card .project-image-container {
+  min-height: 180px;
+}
+
+.project-overlay {
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  opacity: 0;
+}
+
+.project-image-container:hover .project-overlay,
+.project-image-container:focus-within .project-overlay {
+  opacity: 1;
+}
+
+/* Improve spacing and typography on small devices */
+@media (max-width: 991.98px) {
+  html, body {
+    font-size: 15px;
+  }
+
+  .navbar-collapse {
+    background: var(--light-color);
+    border-radius: 8px;
+    padding: 1rem;
+  }
+
+  .navbar .nav-link {
+    padding: 0.65rem 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .display-3 {
+    font-size: 2rem;
+  }
+
+  .display-5 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  /* Slightly smaller hero and profile picture on very small screens */
+  .hero-section {
+    min-height: 80vh;
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .profile-image-container {
+    width: 140px !important;
+    height: 140px !important;
+  }
+
+  /* Make action buttons more compact */
+  .btn-lg {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.95rem;
+  }
+
+  /* Make project cards stack properly */
+  .row.row-cols-1.row-cols-md-2.row-cols-lg-3.g-4 {
+    gap: 1rem !important;
+  }
+
+  /* Make small-screen nav items easier to tap */
+  .navbar .nav-item {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Keep scroll anchor offset reasonable when header height changes */
+  html {
+    scroll-padding-top: 72px;
+  }
+}
+
+/* Accessibility: increase hit area for icon links */
+.social-icon-hero {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+/* Keyboard focus visible improvements */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(13,110,253,0.25);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Ensure focus styles are visible on buttons/links */
+.btn:focus-visible, .nav-link:focus-visible, a:focus-visible, button:focus-visible {
+  box-shadow: 0 0 0 4px rgba(13,110,253,0.08);
+}
+

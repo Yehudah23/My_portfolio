@@ -1,0 +1,255 @@
+<section id="contact" class="py-5" [ngClass]="{'bg-light': !isDarkMode, 'bg-dark text-light': isDarkMode}">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="display-5 fw-bold">Get In Touch</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="lead" [ngClass]="{'text-muted': !isDarkMode, 'text-light opacity-75': isDarkMode}">
+            I'm always interested in new projects and opportunities. Let's create something amazing together!
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row g-5">
+      <!-- Contact Form -->
+      <div class="col-lg-7" data-aos="fade-right">
+        <div class="p-4 rounded-3 shadow-sm h-100" [ngClass]="{'bg-white': !isDarkMode, 'bg-dark-subtle': isDarkMode}">
+          <h3 class="mb-4">Send Me a Message</h3>
+          
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="text" class="form-control" id="nameInput" placeholder="Your Name" formControlName="name"
+                         [ngClass]="{'is-invalid': submitted && f['name'].errors}">
+                  <label for="nameInput">Your Name</label>
+                  <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                    <div *ngIf="f['name'].errors['required']">Name is required</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="col-md-6">
+                <div class="form-floating mb-3">
+                  <input type="email" class="form-control" id="emailInput" placeholder="Your Email" formControlName="email"
+                         [ngClass]="{'is-invalid': submitted && f['email'].errors}">
+                  <label for="emailInput">Your Email</label>
+                  <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['email']">Please enter a valid email</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control" id="subjectInput" placeholder="Subject" formControlName="subject"
+                     [ngClass]="{'is-invalid': submitted && f['subject'].errors}">
+              <label for="subjectInput">Subject</label>
+              <div *ngIf="submitted && f['subject'].errors" class="invalid-feedback">
+                <div *ngIf="f['subject'].errors['required']">Subject is required</div>
+              </div>
+            </div>
+            
+            <div class="form-floating mb-3">
+              <textarea class="form-control" id="messageInput" placeholder="Your Message" style="height: 150px" formControlName="message"
+                        [ngClass]="{'is-invalid': submitted && f['message'].errors}"></textarea>
+              <label for="messageInput">Your Message</label>
+              <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+                <div *ngIf="f['message'].errors['required']">Message is required</div>
+              </div>
+            </div>
+            
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-lg" [disabled]="loading">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                {{ loading ? 'Sending...' : 'Send Message' }}
+              </button>
+            </div>
+            
+            <div *ngIf="success" class="alert alert-success mt-3 animate__animated animate__fadeIn">
+              Your message has been sent successfully! I'll get back to you soon.
+            </div>
+            
+            <div *ngIf="error" class="alert alert-danger mt-3 animate__animated animate__fadeIn">
+              {{ error }}
+            </div>
+          </form>
+        </div>
+      </div>
+      
+      <!-- Contact Info -->
+      <div class="col-lg-5" data-aos="fade-left">
+        <div class="p-4 rounded-3 shadow-sm h-100" [ngClass]="{'bg-white': !isDarkMode, 'bg-dark-subtle': isDarkMode}">
+          <h3 class="mb-4">Contact Information</h3>
+          
+          <div class="contact-info-item d-flex align-items-center mb-4">
+            <div class="icon-circle bg-primary text-white me-3">
+              <i class="bi bi-envelope-fill"></i>
+            </div>
+            <div>
+              <h5 class="mb-1">Email</h5>
+              <p class="mb-0">
+                <a [href]="'mailto:' + (contactInfo.email || 'judahk065@gmail.com')" 
+                   class="text-decoration-none contact-link">
+                  {{ contactInfo.email || 'judahk065@gmail.com' }}
+                </a>
+              </p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item d-flex align-items-center mb-4">
+            <div class="icon-circle bg-primary text-white me-3">
+              <i class="bi bi-telephone-fill"></i>
+            </div>
+            <div>
+              <h5 class="mb-1">Phone</h5>
+              <p class="mb-0">
+                <a [href]="'tel:' + (contactInfo.phone || '+2347085527313,+2348109164183')" 
+                   class="text-decoration-none contact-link">
+                  {{ contactInfo.phone || '+234 708 552 7313, +234 810 916 4183' }}
+                </a>
+              </p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item d-flex align-items-center mb-4">
+            <div class="icon-circle bg-primary text-white me-3">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div>
+              <h5 class="mb-1">Location</h5>
+              <p class="mb-0">{{ contactInfo.location || 'Ogbomoso, Nigeria' }}</p>
+            </div>
+          </div>
+          
+          <div class="contact-info-item d-flex align-items-center mb-4">
+            <div class="icon-circle bg-primary text-white me-3">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+            <div>
+              <h5 class="mb-1">Working Hours</h5>
+              <p class="mb-0">Monday - Friday: 9:00 AM - 6:00 PM</p>
+            </div>
+          </div>
+          
+          <div class="social-links mt-5">
+            <h5 class="mb-3">Connect With Me</h5>
+            <div class="d-flex gap-3 flex-wrap">
+              <a href="https://github.com/Yehudah23" target="_blank" class="social-icon">
+                <i class="bi bi-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/king-judah-oluwakorede-a30259279" target="_blank" class="social-icon">
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="https://x.com/kingjud56263870?s=11" target="_blank" class="social-icon">
+                <i class="bi bi-twitter-x"></i>
+              </a>
+              <a href="https://www.instagram.com/king_judah_oluwakorede?igsh=MWpiejRlemx4ZnFkZQ%3D%3D&utm_source=qr" target="_blank" class="social-icon">
+                <i class="bi bi-instagram"></i>
+              </a>
+              <a href="https://wa.me/message/MJWURWI4EMHNE1" target="_blank" class="social-icon">
+                <i class="bi bi-whatsapp"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .icon-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .contact-info-item {
+    transition: all 0.3s ease;
+  }
+  
+  .contact-info-item:hover .icon-circle {
+    transform: scale(1.1);
+  }
+  
+  .contact-link {
+    transition: color 0.3s ease;
+  }
+  
+  .contact-link:hover {
+    color: var(--bs-primary) !important;
+  }
+  
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bs-primary);
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .form-control:focus {
+    border-color: var(--bs-primary);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+  }
+  
+  .animate__animated {
+    animation-duration: 1s;
+  }
+  
+  .animate__fadeIn {
+    animation-name: fadeIn;
+  }
+  
+  .animate__fadeInLeft {
+    animation-name: fadeInLeft;
+  }
+  
+  .animate__fadeInRight {
+    animation-name: fadeInRight;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translate3d(-100px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+  
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translate3d(100px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+</style>

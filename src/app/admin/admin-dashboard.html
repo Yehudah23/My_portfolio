@@ -1,0 +1,170 @@
+<div class="admin-container">
+  <nav class="navbar navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">
+        <i class="bi bi-shield-lock me-2"></i>Admin Dashboard
+      </span>
+      <button class="btn btn-outline-light" (click)="logout()">
+        <i class="bi bi-box-arrow-right me-2"></i>Logout
+      </button>
+    </div>
+  </nav>
+  
+  <div class="container-fluid">
+    <div class="row mb-4">
+      <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Manage Projects</h2>
+          <button class="btn btn-primary" (click)="openAddForm()" *ngIf="!showForm">
+            <i class="bi bi-plus-circle me-2"></i>Add New Project
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Project Form -->
+    <div *ngIf="showForm" class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">{{ editMode ? 'Edit' : 'Add New' }} Project</h5>
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="saveProject()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Title *</label>
+              <input type="text" class="form-control" [(ngModel)]="currentProject.title" name="title" required>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Category *</label>
+              <select class="form-control" [(ngModel)]="currentProject.category" name="category">
+                <option value="Web App">Web App</option>
+                <option value="Website">Website</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="API">API</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            
+            <div class="col-12 mb-3">
+              <label class="form-label">Description *</label>
+              <textarea class="form-control" rows="3" [(ngModel)]="currentProject.description" name="description" required></textarea>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Image File</label>
+              <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)" name="image">
+              <small class="text-muted d-block">Upload a JPG, PNG, or WebP image</small>
+              <small class="text-muted" *ngIf="currentProject.image">
+                Current: <img [src]="currentProject.image" alt="preview" style="max-height: 80px; margin-top: 5px;">
+              </small>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Featured</label>
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" [(ngModel)]="currentProject.featured" name="featured" id="featured">
+                <label class="form-check-label" for="featured">
+                  Show on homepage
+                </label>
+              </div>
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">GitHub URL</label>
+              <input type="url" class="form-control" [(ngModel)]="currentProject.githubUrl" name="githubUrl" placeholder="https://github.com/username/repo">
+            </div>
+            
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Live URL</label>
+              <input type="url" class="form-control" [(ngModel)]="currentProject.liveUrl" name="liveUrl" placeholder="https://example.com">
+            </div>
+            
+            <div class="col-12 mb-3">
+              <label class="form-label">Technologies</label>
+              <div class="input-group mb-2">
+                <input type="text" class="form-control" [(ngModel)]="techInput" name="techInput" placeholder="Enter technology" (keyup.enter)="addTechnology()">
+                <button class="btn btn-outline-secondary" type="button" (click)="addTechnology()">
+                  <i class="bi bi-plus"></i> Add
+                </button>
+              </div>
+              <div class="d-flex flex-wrap gap-2">
+                <span *ngFor="let tech of currentProject.technologies; let i = index" class="badge bg-secondary">
+                  {{ tech }}
+                  <i class="bi bi-x-circle ms-1" style="cursor: pointer;" (click)="removeTechnology(i)"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success" [disabled]="loading">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ editMode ? 'Update' : 'Create' }} Project
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancelForm()" [disabled]="loading">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Projects Table -->
+    <div class="card">
+      <div class="card-body">
+        <div *ngIf="loading && projects.length === 0" class="text-center py-5">
+          <div class="spinner-border text-primary"></div>
+          <p class="mt-2">Loading projects...</p>
+        </div>
+        
+        <div *ngIf="!loading && projects.length === 0" class="text-center py-5">
+          <i class="bi bi-folder-x display-1 text-muted"></i>
+          <p class="mt-3">No projects yet. Add your first project!</p>
+        </div>
+        
+        <div *ngIf="projects.length > 0" class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Technologies</th>
+                <th>Featured</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let project of projects">
+                <td>{{ project.id }}</td>
+                <td>
+                  <strong>{{ project.title }}</strong>
+                  <br><small class="text-muted">{{ project.description | slice:0:60 }}...</small>
+                </td>
+                <td><span class="badge bg-info">{{ project.category }}</span></td>
+                <td>
+                  <span *ngFor="let tech of project.technologies" class="badge bg-secondary me-1 mb-1">{{ tech }}</span>
+                  <small *ngIf="!project.technologies || project.technologies.length === 0" class="text-muted">No technologies</small>
+                </td>
+                <td>
+                  <i class="bi" [ngClass]="project.featured ? 'bi-star-fill text-warning' : 'bi-star'"></i>
+                </td>
+                <td>
+                  <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-primary" (click)="editProject(project)" title="Edit">
+                      <i class="bi bi-pencil"></i>
+                    </button>
+                    <button class="btn btn-outline-danger" (click)="deleteProject(project.id!)" title="Delete">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

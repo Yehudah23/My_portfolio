@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Admin API Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        button.danger {
+            background: #dc3545;
+        }
+        button.danger:hover {
+            background: #c82333;
+        }
+        button.success {
+            background: #28a745;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .result {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+        }
+        .success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        .project-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+            background: #fafafa;
+        }
+        .project-card h3 {
+            margin-top: 0;
+        }
+        .project-card button {
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔧 Portfolio Admin API Tester</h1>
+    
+    <!-- Login Section -->
+    <div class="container">
+        <h2>1. Login</h2>
+        <div class="form-group">
+            <label>Username:</label>
+            <input type="text" id="username" value="admin">
+        </div>
+        <div class="form-group">
+            <label>Password:</label>
+            <input type="password" id="password" value="yehudah23">
+        </div>
+        <button onclick="login()">Login</button>
+        <button onclick="checkAuth()">Check Auth</button>
+        <button class="danger" onclick="logout()">Logout</button>
+        <div id="loginResult" class="result"></div>
+    </div>
+
+    <!-- Get Projects Section -->
+    <div class="container">
+        <h2>2. View Projects</h2>
+        <button onclick="getProjects()">Load All Projects</button>
+        <div id="projectsResult" class="result"></div>
+        <div id="projectsList" class="projects-list"></div>
+    </div>
+
+    <!-- Create Project Section -->
+    <div class="container">
+        <h2>3. Create New Project</h2>
+        <div class="form-group">
+            <label>Title:</label>
+            <input type="text" id="newTitle" value="My Test Project">
+        </div>
+        <div class="form-group">
+            <label>Description:</label>
+            <textarea id="newDescription" rows="3">This is a test project created via API</textarea>
+        </div>
+        <div class="form-group">
+            <label>Category:</label>
+            <select id="newCategory">
+                <option value="Web App">Web App</option>
+                <option value="Mobile App">Mobile App</option>
+                <option value="Website">Website</option>
+                <option value="API">API</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Image URL:</label>
+            <input type="text" id="newImage" value="https://via.placeholder.com/400x300">
+        </div>
+        <div class="form-group">
+            <label>Technologies (comma separated):</label>
+            <input type="text" id="newTech" value="Angular, TypeScript, PHP">
+        </div>
+        <div class="form-group">
+            <label>GitHub URL:</label>
+            <input type="text" id="newGithub" value="https://github.com/yourusername/project">
+        </div>
+        <div class="form-group">
+            <label>Live URL:</label>
+            <input type="text" id="newLive" value="https://yourproject.com">
+        </div>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="newFeatured"> Featured Project
+            </label>
+        </div>
+        <button class="success" onclick="createProject()">Create Project</button>
+        <div id="createResult" class="result"></div>
+    </div>
+
+    <!-- Update/Delete Section -->
+    <div class="container">
+        <h2>4. Update/Delete Project</h2>
+        <div class="form-group">
+            <label>Project ID:</label>
+            <input type="number" id="updateId" value="1">
+        </div>
+        <div class="form-group">
+            <label>New Title:</label>
+            <input type="text" id="updateTitle" value="Updated Project Title">
+        </div>
+        <div class="form-group">
+            <label>New Description:</label>
+            <textarea id="updateDescription" rows="3">Updated project description</textarea>
+        </div>
+        <button onclick="updateProject()">Update Project</button>
+        <button class="danger" onclick="deleteProject()">Delete Project</button>
+        <div id="updateResult" class="result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost/myportfolio/php';
+        
+        function showResult(elementId, message, type = 'info') {
+            const el = document.getElementById(elementId);
+            el.textContent = message;
+            el.className = `result ${type}`;
+        }
+
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth.php?action=login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                showResult('loginResult', JSON.stringify(data, null, 2), data.success ? 'success' : 'error');
+            } catch (error) {
+                showResult('loginResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function checkAuth() {
+            try {
+                const response = await fetch(`${API_BASE}/auth.php?action=check`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                showResult('loginResult', JSON.stringify(data, null, 2), data.authenticated ? 'success' : 'error');
+            } catch (error) {
+                showResult('loginResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function logout() {
+            try {
+                const response = await fetch(`${API_BASE}/auth.php?action=logout`, {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                showResult('loginResult', JSON.stringify(data, null, 2), 'info');
+            } catch (error) {
+                showResult('loginResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function getProjects() {
+            try {
+                const response = await fetch(`${API_BASE}/projects.php`);
+                const data = await response.json();
+                showResult('projectsResult', JSON.stringify(data, null, 2), data.success ? 'success' : 'error');
+                
+                if (data.success && data.data) {
+                    displayProjects(data.data);
+                }
+            } catch (error) {
+                showResult('projectsResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        function displayProjects(projects) {
+            const container = document.getElementById('projectsList');
+            container.innerHTML = projects.map(p => `
+                <div class="project-card">
+                    <h3>${p.title}</h3>
+                    <p><strong>ID:</strong> ${p.id}</p>
+                    <p><strong>Category:</strong> ${p.category}</p>
+                    <p><strong>Featured:</strong> ${p.featured ? 'Yes' : 'No'}</p>
+                    <p>${p.description}</p>
+                    <button onclick="fillUpdateForm(${p.id}, '${p.title.replace(/'/g, "\\'")}', '${p.description.replace(/'/g, "\\'")}')">Edit</button>
+                    <button class="danger" onclick="quickDelete(${p.id})">Delete</button>
+                </div>
+            `).join('');
+        }
+
+        function fillUpdateForm(id, title, description) {
+            document.getElementById('updateId').value = id;
+            document.getElementById('updateTitle').value = title;
+            document.getElementById('updateDescription').value = description;
+            window.scrollTo({ top: document.getElementById('updateResult').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        async function createProject() {
+            const project = {
+                title: document.getElementById('newTitle').value,
+                description: document.getElementById('newDescription').value,
+                category: document.getElementById('newCategory').value,
+                image: document.getElementById('newImage').value,
+                technologies: document.getElementById('newTech').value.split(',').map(t => t.trim()),
+                githubUrl: document.getElementById('newGithub').value,
+                liveUrl: document.getElementById('newLive').value,
+                featured: document.getElementById('newFeatured').checked
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/projects.php`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(project)
+                });
+                
+                const data = await response.json();
+                showResult('createResult', JSON.stringify(data, null, 2), data.success ? 'success' : 'error');
+                
+                if (data.success) {
+                    setTimeout(() => getProjects(), 500);
+                }
+            } catch (error) {
+                showResult('createResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function updateProject() {
+            const id = document.getElementById('updateId').value;
+            const project = {
+                id: parseInt(id),
+                title: document.getElementById('updateTitle').value,
+                description: document.getElementById('updateDescription').value,
+                category: 'Web App',
+                technologies: ['Angular', 'PHP']
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/projects.php`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify(project)
+                });
+                
+                const data = await response.json();
+                showResult('updateResult', JSON.stringify(data, null, 2), data.success ? 'success' : 'error');
+                
+                if (data.success) {
+                    setTimeout(() => getProjects(), 500);
+                }
+            } catch (error) {
+                showResult('updateResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function deleteProject() {
+            const id = document.getElementById('updateId').value;
+            
+            if (!confirm(`Are you sure you want to delete project #${id}?`)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/projects.php?id=${id}`, {
+                    method: 'DELETE',
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                showResult('updateResult', JSON.stringify(data, null, 2), data.success ? 'success' : 'error');
+                
+                if (data.success) {
+                    setTimeout(() => getProjects(), 500);
+                }
+            } catch (error) {
+                showResult('updateResult', 'Error: ' + error.message, 'error');
+            }
+        }
+
+        async function quickDelete(id) {
+            document.getElementById('updateId').value = id;
+            await deleteProject();
+        }
+
+        // Auto-load projects on page load
+        window.onload = () => {
+            checkAuth();
+            getProjects();
+        };
+    </script>
+</body>
+</html>

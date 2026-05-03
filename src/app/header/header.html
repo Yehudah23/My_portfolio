@@ -1,0 +1,164 @@
+<header class="fixed-top" [ngClass]="{'bg-light shadow-sm': !darkMode && !isScrolled, 
+                                'bg-dark shadow-sm': darkMode && !isScrolled,
+                                'bg-light shadow': !darkMode && isScrolled,
+                                'bg-dark shadow': darkMode && isScrolled}">
+  <nav class="navbar navbar-expand-lg" [ngClass]="{'navbar-light': !darkMode, 'navbar-dark': darkMode}">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" routerLink="/">
+        <span class="brand-logo me-2">KJ</span>
+        <span class="brand-text">King Judah</span>
+      </a>
+      
+      <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()" 
+              [attr.aria-expanded]="isMenuOpen" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" [ngClass]="{'show': isMenuOpen}">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item">
+            <a class="nav-link px-3" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="isMenuOpen = false">
+              Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3" href="#about" (click)="scrollTo('about')">
+              About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3" href="#skills" (click)="scrollTo('skills')">
+              Skills
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3" href="#projects" (click)="scrollTo('projects')">
+              Projects
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-3" routerLink="/contact" routerLinkActive="active" (click)="isMenuOpen = false">
+              Contact
+            </a>
+          </li>
+          <li class="nav-item ms-lg-3">
+            <button class="btn rounded-circle theme-toggle-btn" 
+                    [ngClass]="{'btn-light': darkMode, 'btn-dark': !darkMode}" 
+                    (click)="toggleDarkMode()" 
+                    aria-label="Toggle dark mode">
+              <i class="bi" [ngClass]="darkMode ? 'bi-sun-fill' : 'bi-moon-fill'"></i>
+            </button>
+          </li>
+          <li class="nav-item ms-lg-3 d-none d-lg-block">
+            <a routerLink="/contact" class="btn btn-primary rounded-pill px-4" (click)="isMenuOpen = false">
+              Hire Me
+            </a>
+          </li>
+          <!-- Mobile CTA: visible only on small and medium screens inside collapsed menu -->
+          <li class="nav-item d-lg-none w-100 mt-2">
+            <a routerLink="/contact" class="btn btn-primary rounded-pill btn-block px-4" (click)="isMenuOpen = false" aria-label="Hire me">
+              Hire Me
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .navbar {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  .brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    background-color: var(--bs-primary);
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .brand-text {
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  
+  .navbar-brand:hover .brand-logo {
+    transform: rotate(10deg);
+  }
+  
+  .nav-link {
+    position: relative;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--bs-primary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    width: 70%;
+  }
+  
+  .nav-link.active {
+    color: var(--bs-primary) !important;
+    font-weight: 600;
+  }
+  
+  .theme-toggle-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+  }
+  
+  .theme-toggle-btn:hover {
+    transform: rotate(30deg);
+  }
+  
+  @media (max-width: 991.98px) {
+    .navbar-collapse {
+      padding: 1rem 0;
+    }
+    
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  /* Mobile-specific header adjustments */
+  @media (max-width: 991.98px) {
+    .navbar-brand .brand-text {
+      display: none; /* conserve space on smaller viewports */
+    }
+
+    .theme-toggle-btn {
+      margin-left: 0.5rem;
+    }
+
+    /* Make any primary action in the collapsed menu full-width and easier to tap */
+    .navbar-collapse .btn {
+      width: 100%;
+    }
+  }
+</style>

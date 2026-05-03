@@ -1,0 +1,86 @@
+<section id="skills" class="py-5 text-light" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="display-5 fw-bold">Technical Skills</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="lead text-light opacity-75">
+            An overview of my technical expertise and proficiency levels.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Skill tabs -->
+    <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
+      <ul class="nav nav-pills justify-content-center mb-4" id="skillsTabs" role="tablist">
+        <li class="nav-item" role="presentation" *ngFor="let category of skillCategories; let i = index">
+          <button class="nav-link mx-1" 
+                  [ngClass]="{'active': i === activeTabIndex}"
+                  [id]="'tab-' + category.category.toLowerCase().replace(' ', '-')"
+                  (click)="setActiveTab(i)"
+                  type="button" role="tab">
+            {{ category.category }}
+          </button>
+        </li>
+      </ul>
+    </div>
+    
+    <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+      <div class="tab-pane fade show active">
+        <div class="row g-4">
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="300">
+            <div class="skill-card">
+              <div class="d-flex align-items-center mb-4">
+                <div class="bg-primary rounded-circle p-3 text-white me-3">
+                  <i class="bi" [ngClass]="getIconForCategory(activeCategory?.category || '')"></i>
+                </div>
+                <h3 class="mb-0 text-light">{{ activeCategory?.category }}</h3>
+              </div>
+              
+              <p class="mb-4 text-light opacity-75">
+                {{ activeCategory?.description }}
+              </p>
+              
+              <div class="skill-progress-container">
+                <div *ngFor="let skill of activeCategory?.skills" class="mb-4">
+                  <div class="d-flex justify-content-between mb-1">
+                    <span class="fw-medium">{{ skill.name }}</span>
+                    <span class="badge" 
+                          [ngClass]="getLevelBadgeClass(skill.level)">
+                      {{ skill.level }}
+                    </span>
+                  </div>
+                  <div class="progress" style="height: 10px;">
+                    <div class="progress-bar" 
+                         [ngClass]="getLevelProgressClass(skill.level)"
+                         [stylDocker, CI/CD, Cloud Platforms, Git
+
+e.width.%]="getProgressPercentage(skill.level)"
+                         role="progressbar" 
+                         [attr.aria-valuenow]="getProgressPercentage(skill.level)" 
+                         aria-valuemin="0" 
+                         aria-valuemax="100">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+            <div class="skill-card h-100 d-flex flex-column justify-content-center">
+              <div class="skill-cloud">
+                <div *ngFor="let skill of getAllSkills(); let i = index" 
+                     class="skill-tag"
+                     [style.animation-delay.ms]="i * 100">
+                  {{ skill.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,66 @@
+<footer class="bg-dark text-light py-5 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">King Judah</h5>
+        <p>Full-stack developer passionate about creating exceptional web experiences.</p>
+        <style>
+          .social-icon-footer {
+            transition: all 0.3s ease;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+          }
+          
+          .social-icon-footer:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+            color: white !important;
+          }
+        </style>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="#about" class="text-light text-decoration-none" (click)="scrollTo('about'); $event.preventDefault()">About</a></li>
+          <li class="mb-2"><a href="#skills" class="text-light text-decoration-none" (click)="scrollTo('skills'); $event.preventDefault()">Skills</a></li>
+          <li class="mb-2"><a href="#projects" class="text-light text-decoration-none" (click)="scrollTo('projects'); $event.preventDefault()">Projects</a></li>
+          <li class="mb-2"><a href="#contact" class="text-light text-decoration-none" (click)="scrollTo('contact'); $event.preventDefault()">Contact</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4 mb-4">
+        <h5 class="mb-3">Connect With Me</h5>
+        <div class="d-flex gap-3 flex-wrap">
+          <a href="https://github.com/Yehudah23" target="_blank" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-github"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/king-judah-oluwakorede-a30259279" target="_blank" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="https://x.com/kingjud56263870?s=11" target="_blank" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-twitter-x"></i>
+          </a>
+          <a href="https://www.instagram.com/king_judah_oluwakorede?igsh=MWpiejRlemx4ZnFkZQ%3D%3D&utm_source=qr" target="_blank" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-instagram"></i>
+          </a>
+          <a href="https://wa.me/message/MJWURWI4EMHNE1" target="_blank" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-whatsapp"></i>
+          </a>
+          <a href="mailto:judahk065@gmail.com" class="text-light fs-4 social-icon-footer">
+            <i class="bi bi-envelope-fill"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4 bg-light">
+    <div class="text-center">
+      <p class="mb-0">© {{ currentYear }} King Judah. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

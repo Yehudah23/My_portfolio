@@ -1,0 +1,63 @@
+<section id="about" class="py-5 text-light" style="background: linear-gradient(135deg, #0f3460 0%, #16213e 50%, #1a1a2e 100%);">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="display-5 fw-bold mb-3">About Me</h2>
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <p class="lead text-light opacity-75">
+            I'm a passionate full-stack developer who loves creating efficient, scalable solutions and staying up-to-date with the latest technologies.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="p-4 rounded-3 shadow-sm" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);">
+          <div class="d-flex align-items-center mb-4">
+            <div class="bg-primary rounded-circle p-3 text-white me-3">
+              <i class="bi bi-person-badge fs-3"></i>
+            </div>
+            <h3 class="mb-0 text-light">My Journey</h3>
+          </div>
+          
+          <p class="mb-3 text-light">
+            With over 2+ years of experience in software development, I specialize in building modern web applications that deliver exceptional user experiences.
+          </p>
+          <p class="mb-4 text-light">
+            I enjoy working across the entire development stack, from crafting intuitive user interfaces with Vue.js and Angular to building powerful backend systems with PHP and Laravel.
+          </p>
+          
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <span *ngFor="let badge of badges" class="badge bg-light bg-opacity-25 text-light p-2">{{ badge }}</span>
+          </div>
+          
+          <a href="#contact" class="btn btn-primary mt-3">
+            <i class="bi bi-chat-dots me-2"></i>Let's Connect
+          </a>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="fade-left">
+        <div class="row g-4">
+          <div class="col-md-6" *ngFor="let skill of skills; let i = index">
+            <div class="card h-100 border-0 shadow-sm hover-card" 
+                 style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1) !important;"
+                 data-aos="zoom-in" 
+                 [attr.data-aos-delay]="i * 100">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <div class="rounded-circle bg-light bg-opacity-10 p-2 me-3">
+                    <i class="bi text-light" [ngClass]="getIconForSkill(skill.title)"></i>
+                  </div>
+                  <h5 class="card-title mb-0 text-light">{{ skill.title }}</h5>
+                </div>
+                <p class="card-text text-light opacity-75 small">{{ skill.technologies }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

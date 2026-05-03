@@ -1,0 +1,46 @@
+/* Responsive hero adjustments */
+
+.hero-section {
+	position: relative;
+	overflow: hidden;
+}
+
+.hero-section .profile-image-container {
+	transition: transform 0.35s ease;
+}
+
+.hero-section .typed-text {
+	display: inline-block;
+	max-width: 100%;
+}
+
+@media (max-width: 991.98px) {
+	.hero-section .display-3 {
+		font-size: 2rem;
+		line-height: 1.1;
+	}
+
+	.hero-section .lead {
+		font-size: 0.98rem;
+	}
+
+	.hero-section .profile-image-container {
+		width: 150px !important;
+		height: 150px !important;
+	}
+}
+
+@media (max-width: 575.98px) {
+	.hero-section .display-3 {
+		font-size: 1.6rem;
+	}
+
+	.hero-section .profile-image-container {
+		width: 130px !important;
+		height: 130px !important;
+	}
+
+	.hero-section .d-flex.gap-3 a.btn {
+		width: 100%;
+	}
+}

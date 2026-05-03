@@ -1,0 +1,116 @@
+
+<app-header></app-header>
+
+<main>
+  <router-outlet></router-outlet>
+</main>
+
+<app-footer></app-footer>
+
+<!-- Floating Social Media Sidebar -->
+<div class="social-sidebar" [ngClass]="{'dark-mode': isDarkMode}">
+  <a href="https://github.com/Yehudah23" target="_blank" class="social-sidebar-icon" title="GitHub">
+    <i class="bi bi-github"></i>
+  </a>
+  <a href="https://www.linkedin.com/in/king-judah-oluwakorede-a30259279" target="_blank" class="social-sidebar-icon" title="LinkedIn">
+    <i class="bi bi-linkedin"></i>
+  </a>
+  <a href="https://x.com/kingjud56263870?s=11" target="_blank" class="social-sidebar-icon" title="Twitter">
+    <i class="bi bi-twitter-x"></i>
+  </a>
+  <a href="https://www.instagram.com/king_judah_oluwakorede?igsh=MWpiejRlemx4ZnFkZQ%3D%3D&utm_source=qr" target="_blank" class="social-sidebar-icon" title="Instagram">
+    <i class="bi bi-instagram"></i>
+  </a>
+  <a href="https://wa.me/message/MJWURWI4EMHNE1" target="_blank" class="social-sidebar-icon" title="WhatsApp">
+    <i class="bi bi-whatsapp"></i>
+  </a>
+</div>
+
+<!-- Back to top button -->
+<button class="btn btn-primary back-to-top-btn" 
+        [ngClass]="{'show': showBackToTop}" 
+        (click)="scrollToTop()" 
+        aria-label="Back to top">
+  <i class="bi bi-arrow-up"></i>
+</button>
+
+<style>
+  .back-to-top-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .back-to-top-btn.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .back-to-top-btn:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Social Sidebar Styles */
+  .social-sidebar {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    z-index: 999;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 0 8px 8px 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 5px;
+  }
+  
+  .social-sidebar.dark-mode {
+    background-color: rgba(33, 37, 41, 0.9);
+  }
+  
+  .social-sidebar-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 5px 0;
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    border-radius: 50%;
+  }
+  
+  .social-sidebar-icon:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateX(5px);
+  }
+  
+  .social-sidebar.dark-mode .social-sidebar-icon {
+    color: #f8f9fa;
+  }
+  
+  .social-sidebar.dark-mode .social-sidebar-icon:hover {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  @media (max-width: 768px) {
+    .social-sidebar {
+      display: none; /* Hide on mobile */
+    }
+  }
+</style>
