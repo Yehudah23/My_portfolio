@@ -24,8 +24,10 @@ export class Hero implements OnInit, AfterViewInit {
   constructor(public elementRef: ElementRef) {}
 
   ngOnInit(): void {
-    // Add animation classes when component initializes
-    document.body.classList.add('hero-loaded');
+    // Add animation classes when component initializes (only in browser)
+    if (typeof document !== 'undefined' && document && document.body) {
+      document.body.classList.add('hero-loaded');
+    }
   }
 
   ngAfterViewInit(): void {
@@ -38,7 +40,8 @@ export class Hero implements OnInit, AfterViewInit {
   }
 
   public addAnimationStyles(): void {
-    // Add animation styles dynamically
+    // Add animation styles dynamically (only in browser)
+    if (typeof document === 'undefined') return;
     const style = document.createElement('style');
     style.innerHTML = `
       @keyframes float {

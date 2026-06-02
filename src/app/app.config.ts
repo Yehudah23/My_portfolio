@@ -3,12 +3,12 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { HttpClient, provideHttpClient, } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
-    provideRouter(routes), provideClientHydration(withEventReplay()),provideHttpClient()
+    provideRouter(routes), provideClientHydration(withEventReplay()), provideHttpClient(withFetch())
   ]
 };

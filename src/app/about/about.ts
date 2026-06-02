@@ -20,8 +20,10 @@ export class About implements OnInit {
   badges = ['Problem Solver', 'Team Player', 'Continuous Learner', 'Open Source Contributor'];
 
   ngOnInit(): void {
-    // Add animation styles
-    this.addAnimationStyles();
+    // Add animation styles (only in browser)
+    if (typeof document !== 'undefined') {
+      this.addAnimationStyles();
+    }
   }
 
   getIconForSkill(skillTitle: string): string {
@@ -36,6 +38,7 @@ export class About implements OnInit {
   }
 
   scrollTo(elementId: string): void {
+    if (typeof document === 'undefined') return;
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -43,7 +46,8 @@ export class About implements OnInit {
   }
 
   private addAnimationStyles(): void {
-    // Add hover effect styles
+    // Add hover effect styles (only in browser)
+    if (typeof document === 'undefined') return;
     const style = document.createElement('style');
     style.innerHTML = `
       .hover-card {

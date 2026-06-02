@@ -71,15 +71,20 @@ export class Skills implements OnInit {
   }
   
   ngOnInit(): void {
-    this.addSkillStyles();
-    
-    // Check if dark mode is enabled
-    this.isDarkMode = document.body.classList.contains('dark-mode');
-    
-    // Listen for dark mode changes
-    document.addEventListener('darkModeChange', (e: any) => {
-      this.isDarkMode = e.detail.isDarkMode;
-    });
+    // Only touch DOM in browser
+    if (typeof document !== 'undefined') {
+      this.addSkillStyles();
+
+      // Check if dark mode is enabled
+      this.isDarkMode = document.body.classList.contains('dark-mode');
+
+      // Listen for dark mode changes
+      document.addEventListener('darkModeChange', (e: any) => {
+        this.isDarkMode = e.detail.isDarkMode;
+      });
+    } else {
+      this.isDarkMode = false;
+    }
   }
   
   setActiveTab(index: number): void {
@@ -146,6 +151,7 @@ export class Skills implements OnInit {
   }
   
   private addSkillStyles(): void {
+    if (typeof document === 'undefined') return;
     const style = document.createElement('style');
     style.innerHTML = `
       .skill-progress-container {
