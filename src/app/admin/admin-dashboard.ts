@@ -57,10 +57,10 @@ export class AdminDashboard implements OnInit, OnDestroy {
       const payload = new Blob([], { type: 'application/x-www-form-urlencoded' });
       if (navigator && typeof navigator['sendBeacon'] === 'function') {
         navigator['sendBeacon'](url, payload);
-      } else {
+        } else {
         // Best-effort: synchronous fetch is deprecated, use keepalive if available
         try {
-          fetch(url, { method: 'GET', keepalive: true });
+          fetch(url, { method: 'GET', keepalive: true, credentials: 'include' });
         } catch (e) {
           // nothing we can do on unload
         }

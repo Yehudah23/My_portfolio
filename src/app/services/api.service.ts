@@ -3,12 +3,13 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
 	public readonly http = inject(HttpClient);
 	private readonly platformId = inject(PLATFORM_ID);
-	public readonly baseUrl = '/api';
+	public readonly baseUrl = this.computeBaseUrl();
 	private readonly projectsCacheKey = 'portfolio.projects.cache.v1';
 
 	/**
@@ -143,7 +144,16 @@ export class ApiService {
 	}
 
 	deleteProject(id: number): Observable<any> {
-		return this.http.delete(`${this.baseUrl}/projects.php?id=${id}`, { withCredentials: true }).pipe(
+		// Request as text so we can defensively parse JSON and handle HTML error pages
+		return this.http.delete(`${this.baseUrl}/projects.php?id=${id}`, { withCredentials: true, responseType: 'text' as 'json' }).pipe(
+			map((res: any) => {
+				const text = typeof res === 'string' ? res : JSON.stringify(res);
+				try {
+					return JSON.parse(text);
+				} catch (e) {
+					throw new Error('Server returned an invalid JSON response. Check backend logs.');
+				}
+			}),
 			catchError(this.handleError)
 		);
 	}
@@ -153,6 +163,21 @@ export class ApiService {
 	 */
 	getBaseUrl(): string {
 		return this.baseUrl;
+	}
+
+	private computeBaseUrl(): string {
+		// Default to relative API path for local/dev
+		if (!this.isBrowser()) return '/api';
+
+		const host = window.location.hostname || '';
+
+		// When served from Vercel frontend, point API calls to the Render web service
+		if (host.includes('vercel.app')) {
+			return 'https://myportfolio-amie.onrender.com/api';
+		}
+
+		// Leave localhost and other hosts using the relative /api path
+		return '/api';
 	}
 
 	/**
