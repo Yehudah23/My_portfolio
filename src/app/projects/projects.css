@@ -1,5 +1,9 @@
 /* Projects Component Styles */
 
+#projects {
+  background: var(--page-background);
+}
+
 /* Project card styles - Modern clean design */
 .project-card {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -120,7 +124,7 @@
   .project-card {
     margin-bottom: 1.5rem;
   }
-  
+
   .project-image-container {
     height: 200px;
   }
@@ -134,46 +138,46 @@
     gap: 0.5rem;
     justify-content: center;
   }
-  
+
   .btn-group .btn {
     flex: 0 1 auto;
     font-size: 0.85rem;
     margin: 0;
     padding: 0.4rem 1rem;
   }
-  
+
   /* Ensure cards are visible and properly spaced */
   .col {
     margin-bottom: 1.5rem;
   }
-  
+
   /* Always show overlay buttons on mobile - no hover needed */
   .project-overlay {
     opacity: 1;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.85) 100%);
   }
-  
+
   /* Make project images responsive */
   .project-image-container {
     height: 200px;
   }
-  
+
   /* Card body padding adjustment */
   .project-card .card-body {
     padding: 1.25rem;
   }
-  
+
   /* Adjust title size */
   .project-card .card-title {
     font-size: 1.1rem;
   }
-  
+
   /* Make action buttons full width on mobile */
   .project-card .d-flex.gap-2 {
     flex-direction: column;
     gap: 0.5rem !important;
   }
-  
+
   .project-card .d-flex.gap-2 .btn {
     width: 100%;
   }

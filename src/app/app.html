@@ -1,35 +1,37 @@
 
-<app-header></app-header>
+<div class="os-shell" [ngClass]="{'dark-mode': isDarkMode}">
+  <header class="system-bar">
+    <a class="system-brand" routerLink="/" aria-label="King Judah home">
+      <span class="brand-mark">KJ</span>
+      <span class="brand-copy"><strong>King Judah</strong><small>creative systems</small></span>
+    </a>
+    <div class="system-status"><span class="status-dot"></span> Available for select work <span class="status-divider"></span> {{ currentTime }}</div>
+    <button class="system-menu" type="button" (click)="isDarkMode = !isDarkMode" [attr.aria-label]="isDarkMode ? 'Use light theme' : 'Use dark theme'">
+      <i class="bi" [ngClass]="isDarkMode ? 'bi-sun' : 'bi-moon-stars'"></i>
+    </button>
+  </header>
 
-<main>
-  <router-outlet></router-outlet>
-</main>
+  <aside class="workspace-sidebar" aria-label="Portfolio navigation">
+    <div class="sidebar-label">Workspace</div>
+    <nav>
+      <a *ngFor="let link of workspaceLinks" [routerLink]="link.path" [fragment]="link.fragment" routerLinkActive="active" [routerLinkActiveOptions]="{exact: link.exact}" class="workspace-link">
+        <i class="bi" [ngClass]="link.icon"></i><span>{{ link.label }}</span>
+      </a>
+    </nav>
+    <div class="sidebar-note"><span class="note-icon"><i class="bi bi-stars"></i></span><span><small>Currently building</small><strong>Useful things<br>for the web.</strong></span></div>
+  </aside>
 
-<app-footer></app-footer>
+  <main class="workspace-main"><div class="workspace-crumb"><span>~/portfolio</span><span class="crumb-slash">/</span><span>dashboard</span><span class="live-pill"><span></span> live</span></div><div class="router-frame"><router-outlet></router-outlet></div></main>
 
-<!-- Floating Social Media Sidebar -->
-<div class="social-sidebar" [ngClass]="{'dark-mode': isDarkMode}">
-  <a href="https://github.com/Yehudah23" target="_blank" class="social-sidebar-icon" title="GitHub">
-    <i class="bi bi-github"></i>
-  </a>
-  <a href="https://www.linkedin.com/in/king-judah-oluwakorede-a30259279" target="_blank" class="social-sidebar-icon" title="LinkedIn">
-    <i class="bi bi-linkedin"></i>
-  </a>
-  <a href="https://x.com/kingjud56263870?s=11" target="_blank" class="social-sidebar-icon" title="Twitter">
-    <i class="bi bi-twitter-x"></i>
-  </a>
-  <a href="https://www.instagram.com/king_judah_oluwakorede?igsh=MWpiejRlemx4ZnFkZQ%3D%3D&utm_source=qr" target="_blank" class="social-sidebar-icon" title="Instagram">
-    <i class="bi bi-instagram"></i>
-  </a>
-  <a href="https://wa.me/message/MJWURWI4EMHNE1" target="_blank" class="social-sidebar-icon" title="WhatsApp">
-    <i class="bi bi-whatsapp"></i>
-  </a>
+  <nav class="mobile-dock" aria-label="Mobile portfolio navigation">
+    <a *ngFor="let link of workspaceLinks" [routerLink]="link.path" [fragment]="link.fragment" routerLinkActive="active" [routerLinkActiveOptions]="{exact: link.exact}"><i class="bi" [ngClass]="link.icon"></i><small>{{ link.label }}</small></a>
+  </nav>
 </div>
 
 <!-- Back to top button -->
-<button class="btn btn-primary back-to-top-btn" 
-        [ngClass]="{'show': showBackToTop}" 
-        (click)="scrollToTop()" 
+<button class="btn btn-primary back-to-top-btn"
+        [ngClass]="{'show': showBackToTop}"
+        (click)="scrollToTop()"
         aria-label="Back to top">
   <i class="bi bi-arrow-up"></i>
 </button>
@@ -51,66 +53,17 @@
     z-index: 1000;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
-  
+
   .back-to-top-btn.show {
     opacity: 1;
     visibility: visible;
   }
-  
+
   .back-to-top-btn:hover {
     transform: translateY(-5px);
   }
-  
-  /* Social Sidebar Styles */
-  .social-sidebar {
-    position: fixed;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    display: flex;
-    flex-direction: column;
-    z-index: 999;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 0 8px 8px 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
-    padding: 10px 5px;
-  }
-  
-  .social-sidebar.dark-mode {
-    background-color: rgba(33, 37, 41, 0.9);
-  }
-  
-  .social-sidebar-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    margin: 5px 0;
-    color: var(--primary-color);
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-    border-radius: 50%;
-  }
-  
-  .social-sidebar-icon:hover {
-    background-color: var(--primary-color);
-    color: white;
-    transform: translateX(5px);
-  }
-  
-  .social-sidebar.dark-mode .social-sidebar-icon {
-    color: #f8f9fa;
-  }
-  
-  .social-sidebar.dark-mode .social-sidebar-icon:hover {
-    background-color: var(--primary-color);
-    color: white;
-  }
-  
+
   @media (max-width: 768px) {
-    .social-sidebar {
-      display: none; /* Hide on mobile */
-    }
+    .social-sidebar { display: none; }
   }
 </style>

@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class About implements OnInit {
   skills = [
-    { title: 'Frontend Development', technologies: 'Vue.js, Angular, TypeScript, HTML5, CSS3' },
+    { title: 'Frontend Development', technologies: 'Vue.js, Angular, JavaScript, HTML5, CSS3' },
     { title: 'Backend Development', technologies: 'PHP, Laravel, RESTful APIs, Microservices' },
     { title: 'Database Design', technologies: 'MySQL, Database Architecture, Query Optimization' },
     { title: 'DevOps & Deployment', technologies: 'Docker, CI/CD, Cloud Platforms, Git' }

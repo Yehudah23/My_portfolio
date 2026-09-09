@@ -1,5 +1,5 @@
 <div class="admin-container">
-  <nav class="navbar navbar-dark bg-dark mb-4">
+  <nav class="navbar navbar-dark mb-4" style="background: var(--page-background);">
     <div class="container-fluid">
       <span class="navbar-brand mb-0 h1">
         <i class="bi bi-shield-lock me-2"></i>Admin Dashboard
@@ -9,7 +9,7 @@
       </button>
     </div>
   </nav>
-  
+
   <div class="container-fluid">
     <div class="row mb-4">
       <div class="col">
@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Project Form -->
     <div *ngIf="showForm" class="card mb-4">
       <div class="card-header bg-primary text-white">
@@ -34,7 +34,7 @@
               <label class="form-label">Title *</label>
               <input type="text" class="form-control" [(ngModel)]="currentProject.title" name="title" required>
             </div>
-            
+
             <div class="col-md-6 mb-3">
               <label class="form-label">Category *</label>
               <select class="form-control" [(ngModel)]="currentProject.category" name="category">
@@ -45,12 +45,12 @@
                 <option value="Other">Other</option>
               </select>
             </div>
-            
+
             <div class="col-12 mb-3">
               <label class="form-label">Description *</label>
               <textarea class="form-control" rows="3" [(ngModel)]="currentProject.description" name="description" required></textarea>
             </div>
-            
+
             <div class="col-md-6 mb-3">
               <label class="form-label">Image File</label>
               <input type="file" class="form-control" accept="image/*" (change)="onImageSelected($event)" name="image">
@@ -59,7 +59,7 @@
                 Current: <img [src]="currentProject.image" alt="preview" style="max-height: 80px; margin-top: 5px;">
               </small>
             </div>
-            
+
             <div class="col-md-6 mb-3">
               <label class="form-label">Featured</label>
               <div class="form-check form-switch">
@@ -69,17 +69,17 @@
                 </label>
               </div>
             </div>
-            
+
             <div class="col-md-6 mb-3">
               <label class="form-label">GitHub URL</label>
               <input type="url" class="form-control" [(ngModel)]="currentProject.githubUrl" name="githubUrl" placeholder="https://github.com/username/repo">
             </div>
-            
+
             <div class="col-md-6 mb-3">
               <label class="form-label">Live URL</label>
               <input type="url" class="form-control" [(ngModel)]="currentProject.liveUrl" name="liveUrl" placeholder="https://example.com">
             </div>
-            
+
             <div class="col-12 mb-3">
               <label class="form-label">Technologies</label>
               <div class="input-group mb-2">
@@ -96,7 +96,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="d-flex gap-2">
             <button type="submit" class="btn btn-success" [disabled]="loading">
               <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
@@ -109,7 +109,7 @@
         </form>
       </div>
     </div>
-    
+
     <!-- Projects Table -->
     <div class="card">
       <div class="card-body">
@@ -117,12 +117,12 @@
           <div class="spinner-border text-primary"></div>
           <p class="mt-2">Loading projects...</p>
         </div>
-        
+
         <div *ngIf="!loading && projects.length === 0" class="text-center py-5">
           <i class="bi bi-folder-x display-1 text-muted"></i>
           <p class="mt-3">No projects yet. Add your first project!</p>
         </div>
-        
+
         <div *ngIf="projects.length > 0" class="table-responsive">
           <table class="table table-hover">
             <thead>
