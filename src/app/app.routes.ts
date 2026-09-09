@@ -15,6 +15,7 @@ export const routes: Routes = [
   { path: 'contact', component: Contact },
   { path: 'projects', component: Projects },
   { path: 'skills', component: Skills },
+  { path: 'admin', redirectTo: 'admin/login', pathMatch: 'full' },
   { path: 'admin/login', component: AdminLogin },
   { path: 'admin/dashboard', component: AdminDashboard, canActivate: [authGuard] }
 ];
