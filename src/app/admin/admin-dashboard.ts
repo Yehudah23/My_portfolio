@@ -255,8 +255,10 @@ export class AdminDashboard implements OnInit, OnDestroy {
     this.loading = true;
     this.apiService.deleteProject(id).subscribe({
       next: () => {
+        this.projects = this.projects.filter(project => String(project.id) !== String(id));
         this.clearProjectsCache();
-        this.loadProjects(true, true); // Bypass cache and notify after fresh data loads
+        this.loading = false;
+        window.dispatchEvent(new CustomEvent('projectsUpdated'));
         alert('Project deleted successfully!');
       },
       error: (error) => {
