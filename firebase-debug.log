@@ -1,0 +1,16 @@
+[debug] [2026-09-10T08:16:22.455Z] ----------------------------------------------------------------------
+[debug] [2026-09-10T08:16:22.457Z] Command:       /home/judah/.nvm/versions/node/v24.15.0/bin/node /home/judah/.npm/_npx/7750544ccf494d8b/node_modules/.bin/firebase login
+[debug] [2026-09-10T08:16:22.457Z] CLI Version:   15.30.0
+[debug] [2026-09-10T08:16:22.457Z] Platform:      linux
+[debug] [2026-09-10T08:16:22.458Z] Node Version:  v24.15.0
+[debug] [2026-09-10T08:16:22.458Z] Detected Agent: unknown
+[debug] [2026-09-10T08:16:22.458Z] Time:          Thu Sep 10 2026 09:16:22 GMT+0100 (West Africa Time)
+[debug] [2026-09-10T08:16:22.458Z] ----------------------------------------------------------------------
+[debug] 
+[info] Already logged in as judahk065@gmail.com
+[debug] [2026-09-10T08:16:28.443Z] Error: Timed out.
+    at Timeout._onTimeout (/home/judah/.npm/_npx/7750544ccf494d8b/node_modules/firebase-tools/lib/utils.js:299:49)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7)
+[error] 
+[error] Error: An unexpected error has occurred.
