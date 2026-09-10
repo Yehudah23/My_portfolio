@@ -5,30 +5,27 @@ import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { FirebaseApp, getApp, getApps, initializeApp } from 'firebase/app';
 import { Auth, User, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { addDoc, collection, deleteDoc, doc, Firestore, getDoc, getDocs, getFirestore, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
-import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import type { FirebaseStorage } from 'firebase/storage';
 import { firebaseConfig, isFirebaseConfigured } from '../firebase.config';
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   private readonly platformId = inject(PLATFORM_ID);
   private readonly projectsCacheKey = 'portfolio.projects.cache.v1';
+  private readonly cloudinaryCloudName = 'y7xto258';
+  private readonly cloudinaryUploadPreset = 'myportfolio';
   private readonly app: FirebaseApp | null;
   private readonly auth: Auth | null;
   private readonly firestore: Firestore | null;
-  private readonly storage: FirebaseStorage | null;
 
   constructor() {
     if (this.isBrowser() && isFirebaseConfigured) {
       this.app = getApps().length ? getApp() : initializeApp(firebaseConfig);
       this.auth = getAuth(this.app);
       this.firestore = getFirestore(this.app);
-      this.storage = getStorage(this.app);
     } else {
       this.app = null;
       this.auth = null;
       this.firestore = null;
-      this.storage = null;
     }
   }
 
@@ -152,13 +149,34 @@ export class ApiService {
   private async prepareProject(project: any): Promise<any> {
     const data = { ...project };
     delete data.id;
-    if (data.image?.startsWith('data:') && this.storage) {
-      const imageBlob = await (await fetch(data.image)).blob();
-      const imageReference = ref(this.storage, `projects/${crypto.randomUUID()}`);
-      await uploadBytes(imageReference, imageBlob);
-      data.image = await getDownloadURL(imageReference);
+    if (data.image?.startsWith('data:')) {
+      data.image = await this.uploadImageToCloudinary(data.image);
     }
     return data;
+  }
+
+  private async uploadImageToCloudinary(dataUrl: string): Promise<string> {
+    const response = await fetch(dataUrl);
+    const imageBlob = await response.blob();
+    const formData = new FormData();
+    formData.append('file', imageBlob, 'project-image');
+    formData.append('upload_preset', this.cloudinaryUploadPreset);
+
+    const uploadResponse = await fetch(
+      `https://api.cloudinary.com/v1_1/${this.cloudinaryCloudName}/image/upload`,
+      { method: 'POST', body: formData }
+    );
+
+    if (!uploadResponse.ok) {
+      throw new Error('Cloudinary image upload failed. Check the cloud name and unsigned upload preset.');
+    }
+
+    const result = await uploadResponse.json();
+    if (!result.secure_url) {
+      throw new Error('Cloudinary did not return an image URL.');
+    }
+
+    return result.secure_url;
   }
 
   private firebaseNotConfigured(): Observable<never> {

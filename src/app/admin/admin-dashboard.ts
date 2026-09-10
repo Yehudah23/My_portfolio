@@ -229,13 +229,13 @@ export class AdminDashboard implements OnInit, OnDestroy {
         // Clear browser cache for this endpoint
         this.clearProjectsCache();
 
-        // Wait longer to ensure DB write is complete
-        setTimeout(() => {
-          this.loading = false;
-          this.cancelForm();
-          this.loadProjects(true, true); // Bypass cache and notify after fresh data loads
-          alert(this.editMode ? '✅ Project updated successfully! Check console for details.' : '✅ Project created successfully!');
-        }, 1000);
+        const message = this.editMode
+          ? 'Project updated successfully!'
+          : 'Project created successfully!';
+        this.loading = false;
+        this.cancelForm();
+        this.loadProjects(true, true); // The write has completed; refresh immediately.
+        alert(message);
       },
       error: (error) => {
         console.error('=== SAVE FAILED ===');
